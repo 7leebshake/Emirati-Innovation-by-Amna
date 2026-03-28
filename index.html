@@ -10,18 +10,20 @@
   />
   <style>
     :root {
-      --bg: #f5f1ea;
-      --surface: #f9f7f2;
-      --card: #fffdf9;
-      --text: #161616;
-      --muted: #666157;
-      --line: rgba(22, 22, 22, 0.12);
-      --strong-line: rgba(22, 22, 22, 0.24);
-      --accent: #161616;
-      --max: 1180px;
-      --radius-xl: 32px;
-      --radius-lg: 22px;
-      --shadow: 0 10px 35px rgba(0, 0, 0, 0.06);
+      --bg: #e8e6df;
+      --panel: rgba(255,255,255,0.62);
+      --panel-strong: rgba(255,255,255,0.78);
+      --text: #141414;
+      --muted: #5f5a52;
+      --line: rgba(20,20,20,0.12);
+      --line-strong: rgba(20,20,20,0.2);
+      --accent: #141414;
+      --soft: #f6f3ec;
+      --max: 1200px;
+      --radius-xl: 34px;
+      --radius-lg: 24px;
+      --radius-md: 18px;
+      --shadow: 0 20px 50px rgba(17,17,17,0.08);
     }
 
     * { box-sizing: border-box; }
@@ -29,51 +31,79 @@
     body {
       margin: 0;
       font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
       color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(255,255,255,0.7), transparent 28%),
+        radial-gradient(circle at 85% 15%, rgba(255,255,255,0.55), transparent 22%),
+        linear-gradient(180deg, #ece9e2 0%, #dfdcd5 100%);
       line-height: 1.55;
     }
 
-    img { max-width: 100%; display: block; }
+    body::before,
+    body::after {
+      content: "";
+      position: fixed;
+      inset: auto;
+      width: 420px;
+      height: 420px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.22);
+      filter: blur(10px);
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    body::before { top: -120px; right: -80px; }
+    body::after { bottom: -140px; left: -90px; }
+
     a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
 
     .wrap {
       width: min(var(--max), calc(100% - 32px));
       margin: 0 auto;
     }
 
+    .site-shell {
+      padding: 18px 0 40px;
+    }
+
     .topbar {
       position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(18px);
-      background: rgba(245, 241, 234, 0.84);
-      border-bottom: 1px solid rgba(22, 22, 22, 0.06);
+      top: 14px;
+      z-index: 40;
     }
 
     .topbar-inner {
-      min-height: 76px;
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 20px;
+      min-height: 72px;
+      padding: 14px 18px;
+      border: 1px solid rgba(255,255,255,0.4);
+      border-radius: 999px;
+      background: rgba(250,248,243,0.7);
+      backdrop-filter: blur(20px);
+      box-shadow: var(--shadow);
     }
 
     .brand {
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: -0.02em;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      font-size: 1rem;
+      white-space: nowrap;
     }
 
     .nav {
       display: flex;
-      gap: 28px;
       align-items: center;
+      gap: 26px;
     }
 
     .nav a {
-      font-size: 0.95rem;
       color: var(--muted);
+      font-size: 0.95rem;
     }
 
     .nav a:hover { color: var(--text); }
@@ -82,60 +112,29 @@
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       border-radius: 999px;
-      padding: 14px 22px;
-      border: 1px solid var(--accent);
-      transition: 0.2s ease;
-      font-weight: 600;
-      font-size: 0.95rem;
-    }
-
-    .button.primary {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .button.secondary {
-      background: transparent;
-      color: var(--text);
-      border-color: var(--line);
+      padding: 13px 20px;
+      border: 1px solid var(--line-strong);
+      font-size: 0.94rem;
+      font-weight: 700;
+      transition: transform 0.2s ease, opacity 0.2s ease, background 0.2s ease;
     }
 
     .button:hover {
       transform: translateY(-1px);
-      opacity: 0.95;
+      opacity: 0.96;
     }
 
-    .hero {
-      padding: 70px 0 36px;
+    .button.primary {
+      background: var(--accent);
+      color: white;
+      border-color: var(--accent);
     }
 
-    .hero-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 26px;
-      align-items: stretch;
-    }
-
-    .hero-copy,
-    .hero-panel,
-    .section-block,
-    .project-card,
-    .journal-card,
-    .about-card {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: var(--radius-xl);
-      box-shadow: var(--shadow);
-    }
-
-    .hero-copy {
-      padding: 44px;
-      min-height: 560px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+    .button.secondary {
+      background: rgba(255,255,255,0.42);
+      backdrop-filter: blur(14px);
     }
 
     .eyebrow {
@@ -143,152 +142,226 @@
       letter-spacing: 0.24em;
       font-size: 0.72rem;
       color: var(--muted);
-      margin-bottom: 22px;
+      margin-bottom: 16px;
+    }
+
+    .hero {
+      padding: 26px 0 30px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr) minmax(340px, 0.9fr);
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .glass,
+    .floating-card,
+    .project-card,
+    .timeline-card,
+    .contact-card,
+    .badge-card {
+      border: 1px solid rgba(255,255,255,0.45);
+      background: var(--panel);
+      backdrop-filter: blur(22px);
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-left {
+      padding: 34px;
+      min-height: 700px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-left::after {
+      content: "";
+      position: absolute;
+      width: 280px;
+      height: 280px;
+      right: -60px;
+      top: -80px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.28);
     }
 
     h1 {
-      font-size: clamp(2.6rem, 6vw, 5.4rem);
-      line-height: 0.97;
-      letter-spacing: -0.05em;
-      margin: 0 0 24px;
-      max-width: 12ch;
+      margin: 0 0 20px;
+      font-size: clamp(3rem, 8vw, 7.2rem);
+      line-height: 0.9;
+      letter-spacing: -0.07em;
+      max-width: 8ch;
+      position: relative;
+      z-index: 1;
     }
 
-    .hero-copy p {
-      font-size: 1.08rem;
-      color: var(--muted);
-      max-width: 58ch;
+    .hero-subtitle {
       margin: 0;
+      max-width: 52ch;
+      color: var(--muted);
+      font-size: 1.08rem;
+      position: relative;
+      z-index: 1;
     }
 
     .hero-actions {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 26px;
+      margin-top: 28px;
+      position: relative;
+      z-index: 1;
     }
 
-    .hero-meta {
+    .signature-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+      margin-top: 22px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .mini-pill {
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.55);
+      padding: 9px 13px;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .hero-bottom-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin-top: 36px;
+      gap: 12px;
+      margin-top: 30px;
+      position: relative;
+      z-index: 1;
     }
 
-    .meta-card {
-      background: var(--card);
-      border: 1px solid rgba(22, 22, 22, 0.08);
-      border-radius: 20px;
-      padding: 16px;
+    .badge-card {
+      border-radius: 24px;
+      padding: 18px;
+      background: var(--panel-strong);
     }
 
-    .meta-card strong {
+    .badge-card strong {
       display: block;
-      font-size: 1.05rem;
-      margin-bottom: 5px;
+      margin-bottom: 6px;
+      font-size: 1rem;
     }
 
-    .meta-card span {
+    .badge-card span {
       color: var(--muted);
       font-size: 0.92rem;
     }
 
-    .hero-panel {
-      padding: 24px;
-      display: flex;
-      flex-direction: column;
+    .hero-right {
+      display: grid;
+      grid-template-rows: 1.1fr 0.9fr;
       gap: 18px;
     }
 
-    .panel-box {
-      border-radius: 24px;
-      background: linear-gradient(180deg, #ffffff 0%, #f3efe7 100%);
-      border: 1px solid rgba(22, 22, 22, 0.08);
-      padding: 22px;
+    .floating-card {
+      padding: 26px;
+      position: relative;
+      overflow: hidden;
     }
 
-    .panel-box.large {
-      min-height: 240px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+    .floating-card::before {
+      content: "";
+      position: absolute;
+      inset: auto -30px -30px auto;
+      width: 180px;
+      height: 180px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.25);
+      border: 1px solid rgba(255,255,255,0.25);
     }
 
-    .panel-label {
-      font-size: 0.78rem;
-      text-transform: uppercase;
-      letter-spacing: 0.18em;
-      color: var(--muted);
-    }
-
-    .panel-box h2,
-    .panel-box h3 {
+    .floating-card h2,
+    .floating-card h3 {
       margin: 8px 0 12px;
-      line-height: 1.04;
-      letter-spacing: -0.04em;
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+      position: relative;
+      z-index: 1;
     }
 
-    .panel-box h2 { font-size: 1.7rem; }
-    .panel-box h3 { font-size: 1.25rem; }
+    .floating-card h2 { font-size: clamp(2rem, 4vw, 3.4rem); max-width: 9ch; }
+    .floating-card h3 { font-size: 1.3rem; }
 
-    .panel-box p {
-      margin: 0;
+    .floating-card p,
+    .floating-card li,
+    .section-copy,
+    .project-card p,
+    .timeline-text,
+    .contact-card p {
       color: var(--muted);
-      font-size: 0.96rem;
     }
 
-    .mini-list {
+    .floating-card p { position: relative; z-index: 1; margin: 0; max-width: 36ch; }
+
+    .note-list {
       display: grid;
       gap: 12px;
+      margin-top: 14px;
+      position: relative;
+      z-index: 1;
     }
 
-    .mini-item {
+    .note-item {
       display: flex;
       justify-content: space-between;
-      gap: 18px;
+      gap: 14px;
       padding-bottom: 12px;
-      border-bottom: 1px solid rgba(22, 22, 22, 0.08);
+      border-bottom: 1px solid rgba(20,20,20,0.08);
     }
 
-    .mini-item:last-child {
+    .note-item:last-child {
       border-bottom: 0;
       padding-bottom: 0;
     }
 
-    .mini-item strong {
-      font-size: 0.98rem;
+    .note-item strong {
       display: block;
       margin-bottom: 4px;
+      font-size: 0.98rem;
     }
 
-    .mini-item span,
-    .mini-item small {
+    .note-item small {
       color: var(--muted);
+      white-space: nowrap;
     }
 
-    section {
-      padding: 34px 0;
-    }
+    section { padding: 18px 0; }
 
-    .section-header {
+    .section-head {
       display: flex;
       justify-content: space-between;
-      gap: 24px;
+      gap: 20px;
       align-items: end;
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
-    .section-header h2 {
-      margin: 0 0 10px;
-      font-size: clamp(1.8rem, 3vw, 3rem);
-      letter-spacing: -0.04em;
-      line-height: 1;
+    .section-head h2 {
+      margin: 0 0 8px;
+      font-size: clamp(2rem, 4vw, 3.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
     }
 
-    .section-header p {
+    .section-copy {
+      max-width: 58ch;
       margin: 0;
-      color: var(--muted);
-      max-width: 60ch;
     }
 
     .projects-grid {
@@ -298,296 +371,291 @@
     }
 
     .project-card {
-      padding: 24px;
-      background: var(--card);
-      transition: 0.2s ease;
+      padding: 22px;
+      background: rgba(255,255,255,0.68);
+      transition: transform 0.2s ease, border-color 0.2s ease;
     }
 
     .project-card:hover {
       transform: translateY(-3px);
-      border-color: var(--strong-line);
+      border-color: rgba(20,20,20,0.2);
     }
 
     .project-top {
       display: flex;
       justify-content: space-between;
-      gap: 12px;
       align-items: center;
-      margin-bottom: 18px;
+      gap: 12px;
+      margin-bottom: 16px;
     }
 
     .pill {
       display: inline-flex;
       align-items: center;
       padding: 8px 12px;
-      font-size: 0.8rem;
       border-radius: 999px;
-      background: #f0ebe2;
-      border: 1px solid rgba(22, 22, 22, 0.08);
+      background: rgba(255,255,255,0.7);
+      border: 1px solid rgba(20,20,20,0.09);
       color: var(--muted);
+      font-size: 0.8rem;
     }
 
     .project-card h3 {
       margin: 0 0 10px;
-      font-size: 1.35rem;
-      letter-spacing: -0.03em;
-      line-height: 1.05;
-    }
-
-    .project-card p {
-      color: var(--muted);
-      margin: 0 0 18px;
+      font-size: 1.34rem;
+      line-height: 1.02;
+      letter-spacing: -0.04em;
     }
 
     .tags {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 18px;
+      margin: 16px 0 18px;
     }
 
     .tag {
-      border: 1px solid rgba(22, 22, 22, 0.1);
-      border-radius: 999px;
-      padding: 7px 11px;
-      font-size: 0.82rem;
-      color: var(--muted);
-      background: #fff;
-    }
-
-    .card-link {
-      font-weight: 600;
       display: inline-flex;
-      gap: 8px;
+      padding: 7px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(20,20,20,0.09);
+      background: rgba(255,255,255,0.55);
+      color: var(--muted);
+      font-size: 0.8rem;
+    }
+
+    .inline-link {
+      display: inline-flex;
       align-items: center;
+      gap: 8px;
+      font-weight: 700;
     }
 
-    .journal-layout {
+    .resume-grid {
       display: grid;
-      grid-template-columns: 0.92fr 1.08fr;
+      grid-template-columns: 1fr 1fr;
       gap: 18px;
     }
 
-    .section-block {
-      padding: 28px;
-    }
-
-    .journal-card {
+    .timeline-card {
       padding: 24px;
-      background: var(--card);
-      margin-bottom: 14px;
     }
 
-    .journal-card:last-child { margin-bottom: 0; }
-
-    .journal-card .date {
-      display: block;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      font-size: 0.72rem;
-      margin-bottom: 12px;
-    }
-
-    .journal-card h3 {
-      margin: 0 0 10px;
-      font-size: 1.2rem;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-    }
-
-    .journal-card p {
-      margin: 0;
-      color: var(--muted);
-    }
-
-    .about-grid {
-      display: grid;
-      grid-template-columns: 1.15fr 0.85fr;
-      gap: 18px;
-    }
-
-    .about-card {
-      padding: 32px;
-    }
-
-    .about-card h2 {
-      margin: 10px 0 16px;
-      font-size: clamp(1.8rem, 3vw, 3rem);
-      line-height: 1;
+    .timeline-card h3 {
+      margin: 0 0 16px;
+      font-size: 1.5rem;
       letter-spacing: -0.04em;
     }
 
-    .about-card p {
+    .timeline-item {
+      padding: 16px 0;
+      border-top: 1px solid rgba(20,20,20,0.08);
+    }
+
+    .timeline-item:first-of-type { border-top: 0; padding-top: 0; }
+
+    .timeline-date {
+      font-size: 0.78rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
       color: var(--muted);
-      margin: 0 0 14px;
-      max-width: 64ch;
+      margin-bottom: 8px;
+      display: block;
     }
 
-    .metrics {
-      display: grid;
-      gap: 12px;
-    }
-
-    .metric {
-      border-radius: 20px;
-      border: 1px solid rgba(22, 22, 22, 0.08);
-      padding: 18px;
-      background: var(--card);
-    }
-
-    .metric strong {
+    .timeline-item strong {
       display: block;
       margin-bottom: 5px;
       font-size: 1rem;
     }
 
-    .metric span {
+    .timeline-text { margin: 0; }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 18px;
+    }
+
+    .contact-card {
+      padding: 28px;
+    }
+
+    .contact-card h2 {
+      margin: 0 0 14px;
+      font-size: clamp(2rem, 4vw, 3.4rem);
+      line-height: 0.95;
+      letter-spacing: -0.06em;
+    }
+
+    .contact-list {
+      display: grid;
+      gap: 14px;
+      margin-top: 26px;
+    }
+
+    .contact-item {
+      border-radius: var(--radius-md);
+      background: rgba(255,255,255,0.58);
+      border: 1px solid rgba(20,20,20,0.08);
+      padding: 16px 18px;
+    }
+
+    .contact-item span {
+      display: block;
+      font-size: 0.76rem;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
       color: var(--muted);
-      font-size: 0.92rem;
+      margin-bottom: 6px;
+    }
+
+    .contact-item strong {
+      font-size: 1rem;
     }
 
     footer {
-      padding: 20px 0 50px;
+      padding: 18px 0 0;
     }
 
-    .footer-box {
+    .footer-inner {
       display: flex;
       justify-content: space-between;
-      align-items: center;
       gap: 12px;
-      border-top: 1px solid rgba(22, 22, 22, 0.08);
-      padding-top: 18px;
       color: var(--muted);
       font-size: 0.92rem;
+      border-top: 1px solid rgba(20,20,20,0.08);
+      padding-top: 18px;
     }
 
-    @media (max-width: 980px) {
+    @media (max-width: 1080px) {
       .hero-grid,
       .projects-grid,
-      .journal-layout,
-      .about-grid {
+      .resume-grid,
+      .contact-grid {
         grid-template-columns: 1fr;
       }
 
-      .hero-copy { min-height: auto; }
-      .hero-meta { grid-template-columns: 1fr; }
-      .section-header,
-      .footer-box {
-        flex-direction: column;
-        align-items: start;
-      }
+      .hero-right { grid-template-rows: auto; }
+      .hero-left { min-height: auto; }
+      .hero-bottom-grid { grid-template-columns: 1fr; }
+      .section-head,
+      .footer-inner { flex-direction: column; align-items: start; }
     }
 
-    @media (max-width: 720px) {
+    @media (max-width: 760px) {
       .nav { display: none; }
-      .hero { padding-top: 30px; }
-      .hero-copy,
-      .hero-panel,
-      .section-block,
+      .topbar-inner { padding: 12px 16px; }
+      .hero-left,
+      .floating-card,
       .project-card,
-      .about-card { padding: 22px; }
+      .timeline-card,
+      .contact-card,
+      .badge-card { padding: 20px; }
       h1 { max-width: none; }
     }
   </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="wrap topbar-inner">
-      <a class="brand" href="#home">Emirati Innovation by Amna</a>
-      <nav class="nav">
-        <a href="#projects">Projects</a>
-        <a href="#journal">Journal</a>
-        <a href="#about">About</a>
-      </nav>
-    </div>
-  </header>
+  <div class="site-shell">
+    <header class="topbar wrap">
+      <div class="topbar-inner">
+        <a class="brand" href="#home">Emirati Innovation by Amna</a>
+        <nav class="nav">
+          <a href="#projects">Projects</a>
+          <a href="#resume">Resume</a>
+          <a href="#journal">Journal</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a class="button secondary" href="#contact">Say hello</a>
+      </div>
+    </header>
 
-  <main id="home">
-    <section class="hero">
-      <div class="wrap hero-grid">
-        <div class="hero-copy">
-          <div>
-            <div class="eyebrow">Engineering · Research · Documentation</div>
-            <h1>Ideas turned into working systems.</h1>
-            <p>
-              I build systems to understand how things really work. From thermodynamic engines to experimental prototypes,
-              this space documents the process — not just the results. Every project here is an exploration of energy,
-              design, and performance: tested, broken, rebuilt, and refined.
-            </p>
-            <div class="hero-actions">
-              <a class="button primary" href="#projects">Browse Projects</a>
-              <a class="button secondary" href="#journal">Read the Journal</a>
-            </div>
-          </div>
-
-          <div class="hero-meta">
-            <div class="meta-card">
-              <strong>Research-first</strong>
-              <span>Built around thermodynamics, systems thinking, and experimental design.</span>
-            </div>
-            <div class="meta-card">
-              <strong>Prototype-driven</strong>
-              <span>Not just concepts. Real iterations, constraints, and fabrication decisions.</span>
-            </div>
-            <div class="meta-card">
-              <strong>Emirati perspective</strong>
-              <span>Rooted in innovation, engineering ambition, and long-term technical contribution.</span>
-            </div>
-          </div>
-        </div>
-
-        <aside class="hero-panel">
-          <div class="panel-box large">
+    <main id="home" class="wrap">
+      <section class="hero">
+        <div class="hero-grid">
+          <article class="hero-left glass">
             <div>
-              <div class="panel-label">Now building</div>
+              <div class="eyebrow">Engineer · Researcher · Builder</div>
+              <h1>Ideas into systems.</h1>
+              <p class="hero-subtitle">
+                I build systems to understand how things really work. From thermodynamic engines to experimental prototypes, this space documents the process — not just the result. Tested, broken, rebuilt, and refined.
+              </p>
+              <div class="hero-actions">
+                <a class="button primary" href="#projects">Explore projects</a>
+                <a class="button secondary" href="#journal">Read journal</a>
+              </div>
+              <div class="signature-row">
+                <span class="mini-pill">Thermodynamics</span>
+                <span class="mini-pill">Aerospace-driven design</span>
+                <span class="mini-pill">Fabrication mindset</span>
+              </div>
+            </div>
+
+            <div class="hero-bottom-grid">
+              <div class="badge-card">
+                <strong>Research-first</strong>
+                <span>Power systems, extreme environments, and deep technical curiosity.</span>
+              </div>
+              <div class="badge-card">
+                <strong>Prototype-driven</strong>
+                <span>Real iterations, real constraints, and design choices that survive reality.</span>
+              </div>
+              <div class="badge-card">
+                <strong>Built to grow</strong>
+                <span>A portfolio, lab notebook, and project archive in one place.</span>
+              </div>
+            </div>
+          </article>
+
+          <div class="hero-right">
+            <article class="floating-card">
+              <div class="eyebrow">Now building</div>
               <h2>Cryogenic and pneumatic power generation for hostile environments.</h2>
               <p>
                 Research exploring alternative power systems, thermal behavior, and proof-of-concept design for remote and extreme conditions.
               </p>
-            </div>
-            <a class="card-link" href="#projects">See featured work →</a>
-          </div>
+            </article>
 
-          <div class="panel-box">
-            <div class="panel-label">Recent notes</div>
-            <div class="mini-list">
-              <div class="mini-item">
-                <div>
-                  <strong>Early concept framing</strong>
-                  <span>Research direction, scope, and constraints.</span>
+            <article class="floating-card">
+              <div class="eyebrow">Recent notes</div>
+              <h3>Project thinking, not content filler.</h3>
+              <div class="note-list">
+                <div class="note-item">
+                  <div>
+                    <strong>Early concept framing</strong>
+                    <div class="timeline-text">Scope, assumptions, and what deserves testing first.</div>
+                  </div>
+                  <small>Mar 2026</small>
                 </div>
-                <small>Mar 2026</small>
-              </div>
-              <div class="mini-item">
-                <div>
-                  <strong>Design log: Stirling thinking</strong>
-                  <span>System behavior, geometry, and failure points.</span>
+                <div class="note-item">
+                  <div>
+                    <strong>Design log: Stirling thinking</strong>
+                    <div class="timeline-text">System behavior, geometry, and likely failure points.</div>
+                  </div>
+                  <small>Feb 2026</small>
                 </div>
-                <small>Feb 2026</small>
-              </div>
-              <div class="mini-item">
-                <div>
-                  <strong>Fabrication notes</strong>
-                  <span>What survives contact with reality.</span>
+                <div class="note-item">
+                  <div>
+                    <strong>Fabrication notes</strong>
+                    <div class="timeline-text">What survives contact with real materials and heat.</div>
+                  </div>
+                  <small>Jan 2026</small>
                 </div>
-                <small>Jan 2026</small>
               </div>
-            </div>
+            </article>
           </div>
-        </aside>
-      </div>
-    </section>
+        </div>
+      </section>
 
-    <section id="projects">
-      <div class="wrap">
-        <div class="section-header">
+      <section id="projects">
+        <div class="section-head">
           <div>
-            <div class="eyebrow">Featured projects</div>
-            <h2>Built to show the work, not just the final shot.</h2>
+            <div class="eyebrow">Projects</div>
+            <h2>Design, tech, and some serious obsession.</h2>
           </div>
-          <p>
-            A growing archive of engineering projects, technical experiments, and fabrication ideas. Each one can later link to its own dedicated page and related blog entries.
+          <p class="section-copy">
+            A growing archive of engineering builds, product experiments, and technical investigations. Each project can later link to its own dedicated page with images, documents, and blog entries.
           </p>
         </div>
 
@@ -598,15 +666,13 @@
               <span class="pill">2026</span>
             </div>
             <h3>Cryogenic Stirling Power Generator</h3>
-            <p>
-              A long-term research build focused on compact power generation for hostile and remote environments.
-            </p>
+            <p>A long-term research build focused on compact power generation for hostile and remote environments.</p>
             <div class="tags">
               <span class="tag">Thermodynamics</span>
               <span class="tag">Cryogenics</span>
               <span class="tag">Stirling Cycle</span>
             </div>
-            <a class="card-link" href="#journal">Read project notes →</a>
+            <a class="inline-link" href="#journal">Open project notes →</a>
           </article>
 
           <article class="project-card">
@@ -615,15 +681,13 @@
               <span class="pill">2025</span>
             </div>
             <h3>Jeep JL Modular Mount System</h3>
-            <p>
-              A heat-aware, vibration-conscious mounting concept designed for navigation, filming, and off-road use.
-            </p>
+            <p>A heat-aware, vibration-conscious mounting concept designed for navigation, filming, and off-road use.</p>
             <div class="tags">
               <span class="tag">CAD</span>
               <span class="tag">3D Printing</span>
               <span class="tag">Automotive</span>
             </div>
-            <a class="card-link" href="#journal">View development log →</a>
+            <a class="inline-link" href="#journal">View development log →</a>
           </article>
 
           <article class="project-card">
@@ -632,94 +696,149 @@
               <span class="pill">2026</span>
             </div>
             <h3>Stackable Spinning Tray System</h3>
-            <p>
-              A configurable tray concept with tuned tolerances, compact shaft geometry, and a fabrication-first workflow.
-            </p>
+            <p>A configurable tray concept with tuned tolerances, compact shaft geometry, and a fabrication-first workflow.</p>
             <div class="tags">
               <span class="tag">FeatureScript</span>
               <span class="tag">Mechanisms</span>
               <span class="tag">Fabrication</span>
             </div>
-            <a class="card-link" href="#journal">See iteration notes →</a>
+            <a class="inline-link" href="#journal">See iteration notes →</a>
           </article>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="journal">
-      <div class="wrap journal-layout">
-        <div class="section-block">
-          <div class="eyebrow">Project journal</div>
-          <h2 style="margin:0 0 16px; font-size: clamp(1.8rem, 3vw, 3rem); letter-spacing: -0.04em; line-height: 1;">A blog that stays tied to the work.</h2>
-          <p style="margin:0; color: var(--muted);">
-            Instead of dumping everything into one messy feed, this journal is meant to support the projects directly — notes, lessons, failed ideas, design pivots, and experimental observations.
+      <section id="resume">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Resume</div>
+            <h2>The path behind the work.</h2>
+          </div>
+          <p class="section-copy">
+            A stripped-down resume section so visitors understand the technical background without digging through a full CV first.
           </p>
         </div>
 
-        <div>
-          <article class="journal-card">
-            <span class="date">Mar 2026 · Cryogenic Stirling Power Generator</span>
-            <h3>Why I’m exploring power generation in hostile environments</h3>
-            <p>
-              The core motivation, the sustainability angle, and why extreme-condition systems force better engineering decisions.
-            </p>
+        <div class="resume-grid">
+          <article class="timeline-card">
+            <h3>Education</h3>
+            <div class="timeline-item">
+              <span class="timeline-date">2025</span>
+              <strong>Government Excellence Assessor</strong>
+              <p class="timeline-text">Hamdan bin Mohamed Smart University</p>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-date">2021</span>
+              <strong>MSc Aerospace Engineering — Aerospace Vehicle Design</strong>
+              <p class="timeline-text">Cranfield University · Microlight electric propulsion system and structure.</p>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-date">2019</span>
+              <strong>BSc Mechanical Engineering</strong>
+              <p class="timeline-text">Higher Colleges of Technology · Thermodynamics, fluid dynamics, and mechanical design.</p>
+            </div>
           </article>
 
-          <article class="journal-card">
-            <span class="date">Feb 2026 · Cryogenic Stirling Power Generator</span>
-            <h3>First assumptions I’m willing to challenge</h3>
-            <p>
-              A working list of constraints and design assumptions that will probably get attacked as the prototype gets more real.
-            </p>
-          </article>
-
-          <article class="journal-card">
-            <span class="date">Jan 2026 · Jeep JL Modular Mount System</span>
-            <h3>Heat, vibration, and why most mounts annoy me</h3>
-            <p>
-              Looking at real vehicle use instead of pretending every product lives in a calm studio environment.
-            </p>
+          <article class="timeline-card">
+            <h3>Experience</h3>
+            <div class="timeline-item">
+              <span class="timeline-date">2023 — Current</span>
+              <strong>HSE Engineer · Oceaneering</strong>
+              <p class="timeline-text">Training, auditing, workflow automation, and data-driven compliance systems.</p>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-date">2022 — 2023</span>
+              <strong>Specialist Lab Instructor · Abu Dhabi Polytechnic</strong>
+              <p class="timeline-text">Thermodynamics, fluid mechanics, turbomachinery, and immersive virtual lab development.</p>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-date">2021 — 2022</span>
+              <strong>Technology Consultant · PwC</strong>
+              <p class="timeline-text">Automation tools, smart government R&D, and emerging tech analysis.</p>
+            </div>
           </article>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <section id="about">
-      <div class="wrap about-grid">
-        <article class="about-card">
-          <div class="eyebrow">About</div>
-          <h2>Engineering with curiosity, ambition, and a bias toward building.</h2>
-          <p>
-            This site is a living archive of projects in engineering, design, fabrication, and research. It exists to document how ideas evolve — from rough direction and constraint mapping to prototype decisions and technical reflection.
+      <section id="journal">
+        <div class="section-head">
+          <div>
+            <div class="eyebrow">Journal</div>
+            <h2>The blog stays tied to the work.</h2>
+          </div>
+          <p class="section-copy">
+            No random lifestyle posts. This section is for design logs, lessons learned, technical notes, and decisions that actually matter to each project.
           </p>
-          <p>
-            The goal is simple: build serious things, document them properly, and keep pushing beyond shallow solutions.
-          </p>
-        </article>
+        </div>
 
-        <aside class="metrics">
-          <div class="metric">
-            <strong>Main themes</strong>
-            <span>Thermodynamics, aerospace-driven design, prototyping, CAD, systems thinking.</span>
-          </div>
-          <div class="metric">
-            <strong>Best use of this site</strong>
-            <span>Project archive, research journal, portfolio, and proof of engineering process.</span>
-          </div>
-          <div class="metric">
-            <strong>Next upgrade</strong>
-            <span>Separate project pages and blog posts so updating becomes cleaner and more scalable.</span>
-          </div>
-        </aside>
+        <div class="resume-grid">
+          <article class="timeline-card">
+            <div class="timeline-item">
+              <span class="timeline-date">Mar 2026 · Cryogenic generator</span>
+              <strong>Why I’m exploring power generation in hostile environments</strong>
+              <p class="timeline-text">The engineering pull, sustainability angle, and why extreme conditions force better design choices.</p>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-date">Feb 2026 · Cryogenic generator</span>
+              <strong>First assumptions I’m willing to challenge</strong>
+              <p class="timeline-text">A working list of constraints and design assumptions that will probably get wrecked by real testing.</p>
+            </div>
+          </article>
+
+          <article class="timeline-card">
+            <div class="timeline-item">
+              <span class="timeline-date">Jan 2026 · Jeep mount system</span>
+              <strong>Heat, vibration, and why most mounts annoy me</strong>
+              <p class="timeline-text">Looking at real vehicle use instead of pretending every product lives in a calm studio environment.</p>
+            </div>
+            <div class="timeline-item">
+              <span class="timeline-date">Mar 2026 · Tray system</span>
+              <strong>Tolerance strategy for stackable motion</strong>
+              <p class="timeline-text">Where the fit gets tricky, and how I’m controlling movement without making the part sloppy.</p>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section id="contact">
+        <div class="contact-grid">
+          <article class="contact-card glass">
+            <div class="eyebrow">Contact</div>
+            <h2>Got an idea? Let’s talk.</h2>
+            <p>
+              Whether it’s a collaboration, a research conversation, or a serious engineering rabbit hole, this is the place to reach out.
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="mailto:a.m.alali@icloud.com">Email me</a>
+              <a class="button secondary" href="https://www.linkedin.com/in/amna-mutar-alali" target="_blank" rel="noreferrer">LinkedIn</a>
+            </div>
+          </article>
+
+          <aside class="contact-card">
+            <div class="contact-list">
+              <div class="contact-item">
+                <span>Email</span>
+                <strong>a.m.alali@icloud.com</strong>
+              </div>
+              <div class="contact-item">
+                <span>Based in</span>
+                <strong>Abu Dhabi, United Arab Emirates</strong>
+              </div>
+              <div class="contact-item">
+                <span>Focus</span>
+                <strong>Engineering research, systems design, prototyping, and technical storytelling</strong>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+    </main>
+
+    <footer class="wrap">
+      <div class="footer-inner">
+        <span>© 2026 Emirati Innovation by Amna</span>
+        <span>Inspired by the editorial / floating-card feel of your reference, rebuilt for your content.</span>
       </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="wrap footer-box">
-      <span>© 2026 Emirati Innovation by Amna</span>
-      <span>Built on GitHub Pages. Clean, simple, and easy to grow.</span>
-    </div>
-  </footer>
+    </footer>
+  </div>
 </body>
 </html>
